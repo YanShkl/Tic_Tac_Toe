@@ -1,4 +1,5 @@
 import random
+from ascii import logo
 
 grid = ['-', '-', '-',
         '-', '-', '-',
@@ -11,6 +12,9 @@ gameOn = True
 player_names = {}
 name = None
 name_two = 'Computer'
+
+print(logo)
+print('Welcome to Tic-Tac-Toe Game!\n')
 
 def show_Board(grid):
     print("\n")
@@ -26,7 +30,6 @@ def show_Board(grid):
     print("\n")
 
 
-show_Board(grid)
 
 
 # TODO 1 Take user input
