@@ -93,28 +93,24 @@ def checkForWin(grid):
     global gameRun
     if checkHorizontles(grid):
         show_Board(grid)
-        if winner == 'X':
-            print(f"The winner is {name}!")
-        elif winner == 'O':
-            print(f"The winner is {name_two}!")
+        show_winner()
         gameRun = False
 
     elif checkVerticals(grid):
         show_Board(grid)
-        if winner == 'X':
-            print(f"The winner is {name}!")
-        elif winner == 'O':
-            print(f"The winner is {name_two}!")
+        show_winner()
         gameRun = False
 
     elif checkDiagonal(grid):
         show_Board(grid)
-        if winner == 'X':
-            print(f"The winner is {name}!")
-        elif winner == 'O':
-            print(f"The winner is {name_two}!")
-
+        show_winner()
         gameRun = False
+
+def show_winner():
+    if winner == 'X':
+        print(f"The winner is {name}!")
+    elif winner == 'O':
+        print(f"The winner is {name_two}!")
 
 
 def checkIfTie(grid):
