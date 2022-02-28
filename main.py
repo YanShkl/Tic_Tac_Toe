@@ -7,7 +7,10 @@ grid = ['-', '-', '-',
 gameRun = True
 winner = None
 current_player = 'X'
-
+gameOn = True
+player_names = {}
+name = None
+name_two = 'Computer'
 
 def show_Board(grid):
     print("\n")
@@ -28,11 +31,21 @@ show_Board(grid)
 
 # TODO 1 Take user input
 def take_Input(grid):
-    current_input = int(input('Input the number 1-9 representing the square: '))
-    if grid[current_input - 1] == '-':
-        grid[current_input - 1] = current_player
-    else:
-        print('Oops, This square is already marked.')
+    global current_player
+    if gameRun:
+        if current_player == "X":
+            input_name = name
+        elif current_player == "O":
+            input_name = name_two
+        try:
+            current_input = int(input(f'{input_name}, Input the number 1-9 representing the square: '))
+            if grid[current_input - 1] == '-':
+                grid[current_input - 1] = current_player
+            else:
+                print('Oops, This square is already marked.')
+
+        except UnboundLocalError:
+            pass
 
 
 # TODO 2 Check for win or tie
@@ -69,7 +82,7 @@ def checkDiagonal(grid):
         winner = grid[0]
         return True
     if grid[2] == grid[4] == grid[6] and grid[2] != "-":
-        winner = grid[1]
+        winner = grid[2]
         return True
 
 
@@ -77,17 +90,27 @@ def checkForWin(grid):
     global gameRun
     if checkHorizontles(grid):
         show_Board(grid)
-        print(f"The winner is {winner}!")
+        if winner == 'X':
+            print(f"The winner is {name}!")
+        elif winner == 'O':
+            print(f"The winner is {name_two}!")
         gameRun = False
 
     elif checkVerticals(grid):
         show_Board(grid)
-        print(f"The winner is {winner}!")
+        if winner == 'X':
+            print(f"The winner is {name}!")
+        elif winner == 'O':
+            print(f"The winner is {name_two}!")
         gameRun = False
 
     elif checkDiagonal(grid):
         show_Board(grid)
-        print(f"The winner is {winner}!")
+        if winner == 'X':
+            print(f"The winner is {name}!")
+        elif winner == 'O':
+            print(f"The winner is {name_two}!")
+
         gameRun = False
 
 
@@ -102,6 +125,7 @@ def checkIfTie(grid):
 # switch player
 def switchPlayer():
     global current_player
+
     if current_player == "X":
         current_player = "O"
     else:
@@ -115,13 +139,49 @@ def computer(board):
             board[position] = "O"
             switchPlayer()
 
+while gameOn:
+    try:
+        mode = int(input('Type 1 to play with bot, type 2 to play with friend: \n'))
+    except ValueError:
+        print('Please enter only 1 or 2\n')
+        continue
 
-while gameRun:
-    show_Board(grid)
-    take_Input(grid)
-    checkForWin(grid)
-    checkIfTie(grid)
-    switchPlayer()
-    computer(grid)
-    checkForWin(grid)
-    checkIfTie(grid)
+    if mode == 1:
+        gameRun = True
+        grid = ['-', '-', '-',
+                '-', '-', '-',
+                '-', '-', '-']
+
+        name = input('Input your name: ')
+        player_names[f'{name}'] = 0
+        player_names['Computer'] = 0
+        while gameRun:
+            show_Board(grid)
+            take_Input(grid)
+            checkForWin(grid)
+            checkIfTie(grid)
+            switchPlayer()
+            computer(grid)
+            checkForWin(grid)
+            checkIfTie(grid)
+    elif mode == 2:
+        gameRun = True
+        grid = ['-', '-', '-',
+                '-', '-', '-',
+                '-', '-', '-']
+
+        name = input('Input Player 1 name: ')
+        name_two = input('Input Player 2 name: ')
+        player_names[f'{name}'] = 0
+        player_names[f'{name_two}'] = 0
+        while gameRun:
+            show_Board(grid)
+            take_Input(grid)
+            checkForWin(grid)
+            checkIfTie(grid)
+            show_Board(grid)
+            switchPlayer()
+            take_Input(grid)
+            checkForWin(grid)
+            checkIfTie(grid)
+            switchPlayer()
