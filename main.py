@@ -1,5 +1,5 @@
 import random
-from ascii import logo
+from data import logo
 
 grid = ['-', '-', '-',
         '-', '-', '-',
